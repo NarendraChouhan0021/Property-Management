@@ -173,7 +173,7 @@ const addProperty = async (req, res) => {
           );
         const originalImage = file.path;
         const thumbnailImage =
-          "uploads/" + image.replace(/\.(jpeg|png)$/, `_thumbs.jpg`);
+          "property_Image/" + image.replace(/\.(jpeg|png)$/, `_thumbs.jpg`);
 
         images.push({
           main: originalImage,
