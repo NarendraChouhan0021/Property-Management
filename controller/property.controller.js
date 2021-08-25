@@ -1,4 +1,4 @@
-const { Properties, Images } = require("../modal");
+const { Properties, Images } = require("../models");
 const Sequelize = require("sequelize");
 const sharp = require("sharp");
 const path = require("path");
@@ -215,20 +215,30 @@ const getPropertyDetails = async (req, res) => {
     );
     const propertyDetails = await Properties.findByPk(properties_id);
     let propertyList = propertyDetails;
-    propertyList = propertyList["dataValues"];
-    const images = await Images.findAll({
-      where: { properties_id: propertyList["properties_id"] },
-      attributes: {
-        exclude: ["createdAt", "updatedAt", "properties_id", "image_id"],
-      },
-    });
-    propertyList["images"] = images;
+    propertyList = propertyList && propertyList["dataValues"] ? propertyList["dataValues"] : {};
 
-    return res.status(200).json({
-      isSucceed: true,
-      message: "properties details",
-      data: propertyList,
-    });
+    if (propertyList && Object.keys(propertyList).length) {
+      const images = await Images.findAll({
+        where: { properties_id: propertyList["properties_id"] },
+        attributes: {
+          exclude: ["createdAt", "updatedAt", "properties_id", "image_id"],
+        },
+      });
+      propertyList["images"] = images;
+
+      return res.status(200).json({
+        isSucceed: true,
+        message: "properties details",
+        data: propertyList,
+      });
+    } else {
+      return res.status(200).json({
+        isSucceed: true,
+        message: "No properties details found",
+        data: {},
+      });
+    }
+
   } catch (error) {
     console.error(error);
     return res.status(500).json({

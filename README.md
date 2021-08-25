@@ -1,9 +1,10 @@
 # Property-Management
 
-## Nodejs With MYSql db
+## Nodejs With MYSQL DB
 
 ## Project setup
 
+#### create the db with name ```properties``` in your MYSQL
 ### Run Server Side
 
 ```

@@ -1,7 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const multer = require("multer");
-const models = require("./modal");
+const models = require("./models");
 const path = require("path");
 
 /* PORT assign */
@@ -22,7 +22,6 @@ const storage = multer.diskStorage({
     cb(null, "property_Image");
   },
   filename: (req, file, cb) => {
-    console.log("file", file)
     cb(
       null,
       file.fieldname + "-" + Date.now() + path.extname(file.originalname)
