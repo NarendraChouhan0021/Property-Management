@@ -19,13 +19,15 @@
   "homepage": "https://github.com/NarendraChouhan0021/Property-Management#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "express-validator": "^5.3.0",
     "fs": "0.0.1-security",
+    "helmet": "^4.6.0",
     "morgan": "^1.10.0",
     "multer": "^1.4.3",
     "mysql2": "^2.3.0",
     "path": "^0.12.7",
     "sequelize": "^6.6.5",
-    "helmet": "^4.6.0",
-    "sharp": "^0.29.0"
+    "sharp": "^0.29.0",
+    "dotenv": "^10.0.0"
   }
 }

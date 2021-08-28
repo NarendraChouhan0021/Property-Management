@@ -7,6 +7,7 @@ const path = require("path");
 /* PORT assign */
 const PORT = process.env.PORT || 8080;
 const message = `Server is running on PORT:${PORT}.`;
+const expressValidator = require("express-validator");
 
 /* Init express */
 const app = express();
@@ -16,6 +17,21 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(__dirname));
+
+/* express-validator */
+app.use(
+  expressValidator({
+    errorFormatter: function (param, msg, value) {
+      let namespace = param.split("."),
+        root = namespace.shift(),
+        formParam = root;
+      while (namespace.length) {
+        formParam += "[" + namespace.shift() + "]";
+      }
+      return msg;
+    },
+  })
+);
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
