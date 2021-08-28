@@ -5,6 +5,12 @@
 ## Project setup
 
 #### create the db with name ```properties``` in your MYSQL
+
+#### migrate table 
+```
+npx sequelize-cli db:migrate
+```
+
 ### Run Server Side
 
 ```
