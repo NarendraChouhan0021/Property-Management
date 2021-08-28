@@ -2,31 +2,24 @@ const { Properties, Images } = require("../models");
 const Sequelize = require("sequelize");
 const sharp = require("sharp");
 const path = require("path");
+const { validate } = require("../middleware");
+
+const decodeURI =(queryValue)=>{
+  return queryValue ? decodeURIComponent(queryValue)  : "";
+}
 
 const getPropertyList = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const pageSize = parseInt(req.query.pageSize) || 10;
     const isAlltrue = Boolean(req.query.isAlltrue) || false;
-
-    const searchByArea = req.query.searchByArea
-      ? decodeURIComponent(req.query.searchByArea)
-      : "";
-
-    const searchByPriceRange = req.query.searchByPriceRange
-      ? decodeURIComponent(req.query.searchByPriceRange)
-      : "";
-
     const searchByBedroom = parseInt(req.query.searchByBedroom) || 0;
 
-    const startingDate = req.query.startingDate
-      ? decodeURIComponent(req.query.startingDate)
-      : "";
-
-    const endingDate = req.query.endingDate
-      ? decodeURIComponent(req.query.endingDate)
-      : "";
-
+    const searchByArea = decodeURI(req.query.searchByArea);
+    const searchByPriceRange = decodeURI(req.query.searchByPriceRange);
+    const startingDate = decodeURI(req.query.startingDate);
+    const endingDate = decodeURI(req.query.endingDate);
+    
     const recentHistory = Boolean(req.query.recentHistory) || false;
 
     let findQuery = { where: {} };
@@ -133,26 +126,24 @@ const addProperty = async (req, res) => {
     }
 
     const {
-      name,
-      description,
-      address,
-      area,
-      price,
-      bathroom,
-      bedroom,
-      carpetArea,
+      name, description, address, area, price,
+      bathroom, bedroom, carpetArea,
     } = req.body;
 
-    const property = await Properties.create({
-      name,
-      description,
-      address,
-      area,
-      price,
-      bathroom,
-      bedroom,
-      carpetArea,
-    });
+    const body = {
+      name, description, address, area, price,
+      bathroom, bedroom, carpetArea,
+    }
+
+    const validationIssue = validate(req, res, body);
+
+    if (validationIssue) {
+      return res.status(500).send({
+        message: validationIssue,
+      });
+    }
+
+    const property = await Properties.create(body);
 
     const obj = {
       ...property.dataValues,

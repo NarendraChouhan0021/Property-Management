@@ -17,7 +17,17 @@ module.exports = {
         thumbnail: {
           type: DataTypes.STRING,
           allowNull: false
-        }
+        },
+        createdAt: {
+          allowNull: true,
+          field: "created_at",
+          type: "TIMESTAMP",
+        },
+        updatedAt: {
+          allowNull: true,
+          field: "updated_at",
+          type: "TIMESTAMP",
+        },
       },
       {
         tableName: "Images",

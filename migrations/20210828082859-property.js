@@ -55,6 +55,16 @@ module.exports = {
         type: DataTypes.DATE,
         allowNull: true,
       },
+      createdAt: {
+        allowNull: true,
+        field: "created_at",
+        type: "TIMESTAMP",
+      },
+      updatedAt: {
+        allowNull: true,
+        field: "updated_at",
+        type: "TIMESTAMP",
+      },
     },
     {
       tableName: "Properties",

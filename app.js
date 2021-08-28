@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const morgan = require("morgan");
 const multer = require("multer");
@@ -58,7 +59,7 @@ app.all("*", (req, res) => res.status(404).send(`Access denied`));
 
 // Connection with db.
 models.sequelize
-  .sync({ force: true })
+  .sync()
   .then(() =>
     app.listen(PORT, () =>
       console.log(message, "\nConnection has been established successfully.")

@@ -1,9 +1,9 @@
 const config = {
   development: {
-    database: process.env.DB || 'properties',
-    username: process.env.DB_USERNAME || 'root',
-    password: process.env.DB_PASSWORD || 'password',
-    host: process.env.DB_HOST || '127.0.0.1',
+    database: process.env.DEV_DB_NAME || 'properties',
+    username: process.env.DEV_DB_USER || 'root', 
+    password: process.env.DEV_DB_PASS || 'password', 
+    host: process.env.DEV_DB_HOST || 'localhost',
     dialect: "mysql",
     operatorsAliases: 0,
     pool: {
@@ -14,9 +14,9 @@ const config = {
     },
   },
   production: {
+    database: process.env.PROD_DB_NAME,
     username: process.env.PROD_DB_USER,
     password: process.env.PROD_DB_PASS,
-    database: process.env.PROD_DB_NAME,
     host: process.env.PROD_DB_HOST,
     dialect: "mysql",
     operatorsAliases: 0,
